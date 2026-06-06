@@ -1953,7 +1953,10 @@ I built it because you’re worth the effort.</p>
           const outcomeIndex = Math.floor(Math.random() * wheelOutcomes.length);
           const segment = 360 / wheelOutcomes.length;
           const targetAngle = 360 - outcomeIndex * segment - segment / 2;
-          wheelRotation += 1440 + targetAngle + Math.floor(Math.random() * 80);
+          const currentAngle = ((wheelRotation % 360) + 360) % 360;
+          const safeJitter = (Math.random() - 0.5) * segment * 0.45;
+          const spinDistance = 1440 + targetAngle + safeJitter - currentAngle;
+          wheelRotation += spinDistance;
           wheel.style.transform = `rotate(${wheelRotation}deg)`;
           playTone(340, 0.16, "square");
 
